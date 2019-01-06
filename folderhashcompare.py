@@ -3,15 +3,23 @@ import os
 import hashlib
 import pathlib
 import json
+import argparse
 
-ROOT = pathlib.Path(r'G:\Backup\Minecraft\5 Folders')
-ROOT_DEPTH = len(ROOT.parts)
 BLOCKSIZE = 65536
 
 
+def handle_arguments():
+    parser = argparse.ArgumentParser(description='Find identical subdirectories under specified directory')
+    parser.add_argument('root_dir', help='Root directory to search for duplicate subdirectories under')
+    return parser.parse_args()
+
+
 def main():
-    folders = [pathlib.Path(folder) for folder in glob.glob(os.path.join(ROOT, '**'), recursive=True) if os.path.isdir(folder)]
-    folders.remove(ROOT)
+    args = handle_arguments()
+    root_dir = pathlib.Path(args.root_dir)
+
+    folders = [pathlib.Path(folder) for folder in glob.glob(os.path.join(root_dir, '**'), recursive=True) if os.path.isdir(folder)]
+    folders.remove(root_dir)
 
     hashed_folders = dict()
     while len(folders) > 0:
