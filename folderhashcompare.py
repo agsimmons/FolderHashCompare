@@ -70,7 +70,7 @@ def main():
         if len(rev_multidict[key]) > 1:
             new_data[key] = rev_multidict[key]
 
-    json.dump(new_data, open('output.json', mode='w'), indent=4)
+    json.dumps(new_data, indent=4)
 
 
 if __name__ == '__main__':
